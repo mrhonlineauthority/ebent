@@ -30,10 +30,16 @@
     .heading {
       font-size: 24px;
       font-weight: bold;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
       color: #222;
       position: relative;
       z-index: 10;
+    }
+
+    .counter {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 15px;
     }
 
     .logo {
@@ -47,37 +53,23 @@
       background: #fff;
       max-width: 95%;
       opacity: 0;
-      transition: opacity 0.8s ease-in-out; /* fade speed */
+      transition: opacity 0.8s ease-in-out;
+      z-index: 5;
     }
 
-    .logo.logo1 {
-      width: 800px;
-      aspect-ratio: 1280 / 768;
-    }
+    /* Image sizes */
+    .logo.logo1 { width: 800px; aspect-ratio: 1280 / 768; }
+    .logo.logo2 { width: 350px; aspect-ratio: 472 / 591; }
+    .logo.logo3 { width: 400px; aspect-ratio: 1126 / 860; }
+    .logo.logo4 { width: 400px; aspect-ratio: 648 / 688; }
 
-    .logo.logo2 {
-      width: 350px;
-      aspect-ratio: 472 / 591;
-    }
-    .logo.logo3 {
-      width: 400px;
-      aspect-ratio: 1126 / 860;
-    }
-    .logo.logo4 {
-      width: 400px;
-      aspect-ratio: 648 / 688;
-    }
-
+    /* Responsive */
     @media (max-width: 600px) {
-      .logo.logo1 {
-        width: 90%;
-      }
-      .logo.logo2 {
-        width: 70%;
-      }
-      .heading {
-        font-size: 20px;
-      }
+      .logo.logo1 { width: 90%; }
+      .logo.logo2 { width: 70%; }
+      .logo.logo3 { width: 70%; }
+      .logo.logo4 { width: 80%; }
+      .heading { font-size: 20px; }
     }
   </style>
 </head>
@@ -86,7 +78,9 @@
 
   <div class="container">
     <div class="heading">M.R.H Authority Event</div>
+    <div class="counter" id="counter">1/4</div>
 
+    <!-- Logos -->
     <img src="logo.png" alt="Logo 1" class="logo logo1">
     <img src="riyad.png" alt="Logo 2" class="logo logo2">
     <img src="nnsc.png" alt="Logo 3" class="logo logo3">
@@ -95,19 +89,30 @@
 
   <script>
     const logos = document.querySelectorAll('.logo');
+    const counterEl = document.getElementById('counter');
+
     let current = 0;
+    const total = logos.length;
 
     function showNextLogo() {
+      // Hide all logos
       logos.forEach(logo => logo.style.opacity = '0');
+
+      // Show current logo
       logos[current].style.opacity = '1';
-      current = (current + 1) % logos.length;
+
+      // Update counter
+      counterEl.textContent = (current + 1) + '/' + total;
+
+      // Next index
+      current = (current + 1) % total;
     }
 
-    // প্রথম লোগো দেখানো
+    // First logo
     showNextLogo();
 
-    // প্রতিটি লোগো 3 সেকেন্ডে পরিবর্তন
-    setInterval(showNextLogo, 3000); // 3000 ms = 3 seconds
+    // Change logo every 3 seconds
+    setInterval(showNextLogo, 3000);
   </script>
 
 </body>
